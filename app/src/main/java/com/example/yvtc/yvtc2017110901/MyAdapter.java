@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,31 +46,43 @@ public class MyAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         Log.d("GETVIEW", "position:" + position);
+        ViewHolder holder;
         LayoutInflater inflater = LayoutInflater.from(context);
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.myitem, null);
+            holder = new ViewHolder();
+            holder.tv = (TextView) convertView.findViewById(R.id.textView);
+            holder.btn = (Button) convertView.findViewById(R.id.button);
+            holder.chk = (CheckBox) convertView.findViewById(R.id.checkBox);
+            convertView.setTag(holder);
         }
-
-            TextView tv = (TextView) convertView.findViewById(R.id.textView);
-            Button btn = (Button) convertView.findViewById(R.id.button);
-            CheckBox chk = (CheckBox) convertView.findViewById(R.id.checkBox);
+        else
+        {
+            holder = (ViewHolder) convertView.getTag();
+        }
             final String msg = str[position];
-            btn.setOnClickListener(new View.OnClickListener() {
+            holder.btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
                 }
             });
-//        chk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                b[position] = isChecked;
-//            }
-//        });
-//        chk.setChecked(b[position]);
-            tv.setText(str[position]);
+            holder.chk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                b[position] = isChecked;
+            }
+        });
+        holder.chk.setChecked(b[position]);
+        holder.tv.setText(str[position]);
 
 
         return convertView;
+    }
+    static class ViewHolder
+    {
+        TextView tv;
+        Button btn;
+        CheckBox chk;
     }
 }

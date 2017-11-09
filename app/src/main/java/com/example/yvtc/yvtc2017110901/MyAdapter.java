@@ -13,14 +13,16 @@ import android.widget.TextView;
 
 public class MyAdapter extends BaseAdapter {
     Context context;
-    public MyAdapter(Context context)
+    String str[];
+    public MyAdapter(Context context, String[] str)
     {
         this.context = context;
+        this.str = str;
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return str.length;
     }
 
     @Override
@@ -38,7 +40,7 @@ public class MyAdapter extends BaseAdapter {
         LayoutInflater inflater = LayoutInflater.from(context);
         View v = inflater.inflate(R.layout.myitem, null);
         TextView tv = (TextView) v.findViewById(R.id.textView);
-        tv.setText("Hello World:" + position);
+        tv.setText(str[position]);
         return tv;
     }
 }

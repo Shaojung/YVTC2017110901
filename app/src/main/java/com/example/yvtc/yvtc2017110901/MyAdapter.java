@@ -43,28 +43,33 @@ public class MyAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, final View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         Log.d("GETVIEW", "position:" + position);
         LayoutInflater inflater = LayoutInflater.from(context);
-        View v = inflater.inflate(R.layout.myitem, null);
-        TextView tv = (TextView) v.findViewById(R.id.textView);
-        Button btn = (Button) v.findViewById(R.id.button);
-        CheckBox chk = (CheckBox) v.findViewById(R.id.checkBox);
-        final String msg = str[position];
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
-            }
-        });
-        chk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                b[position] = isChecked;
-            }
-        });
-        chk.setChecked(b[position]);
-        tv.setText(str[position]);
-        return v;
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.myitem, null);
+        }
+
+            TextView tv = (TextView) convertView.findViewById(R.id.textView);
+            Button btn = (Button) convertView.findViewById(R.id.button);
+            CheckBox chk = (CheckBox) convertView.findViewById(R.id.checkBox);
+            final String msg = str[position];
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+//        chk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                b[position] = isChecked;
+//            }
+//        });
+//        chk.setChecked(b[position]);
+            tv.setText(str[position]);
+
+
+        return convertView;
     }
 }
